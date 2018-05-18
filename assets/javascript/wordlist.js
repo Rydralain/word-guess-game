@@ -1,0 +1,1 @@
+var wordList = ["hello","goodbye","what"];
