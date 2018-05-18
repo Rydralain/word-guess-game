@@ -2,31 +2,65 @@
 var game = {
     // just a utility with some methods
     // control reset game - clear letter states, clear hangman state
+    "reset" : function() {
+
+    },
+
     // control game setup - grab word, set letter states, set hangman state
+    "setUp" : function( ){
+
+    }
 }
 
 var hangman = {
+    "remainingLetters" : 0,
+    "remainingGuesses" : 0,
     // control hangman display
-    // track remaining letters
-    // track remaining tries
+    "reset" : function(){
+        this.remainingLetters = 0;
+        this.remainingGuesses = 0;
+    },
+    "badGuess" : function(){
+
+    },
+    "youLose" : function(){
+
+    }
 }
 
+
+// I know that classes are, like, super overkill here, but I've learned a lot about OOP/OOD since I had the time to play with JS,
+// so I wanted to explore it. Also, when did JS get classes? I thought you had to do hackey stuff with the prototype object to do this?!
 class letter {
-    constructor() {
+    constructor(letter) {
         // set initial var values
+        this.isGuessed = false;
+        this.isAnswer = false;
+        this.letter = letter;
+
         // create display tag
-        // set event listeners for tags
+        var newDiv = document.createElement("div");
+        newDiv.setAttribute("id", this.letter);
+        newDiv.setAttribute("class", "letter-guessed");
+        newDiv.innerHTML = this.letter;
+        alphabetDiv.appendChild(newDiv);
+
+        // Now that it exists, let's make it easy to select it.
+        this.div = document.getElementById(this.letter);
     }
 
     reset() {
         // set to default state
+        this.isGuessed = false;
+        this.isAnswer = false;
+        document.getElementById(this.letter)
     }
 
-    setAnswer() {
+    setIsAnswer() {
         // sets this as a correct answer
     }
 
-    isAnswer() {
+    getIsAnswer() {
         // Returns selected state
     }
 
@@ -42,4 +76,16 @@ class letter {
 
 }
 
+// I have summoned the *entire* alphabet!
 var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",];
+var letters = [];
+
+
+var alphabetDiv = document.getElementById("alphabet");
+
+
+alphabet.forEach(function(thisLetter){
+    letters[thisLetter] = new letter(thisLetter);
+})
+
+
