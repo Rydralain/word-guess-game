@@ -10,13 +10,13 @@ var game = {
         alphabet.forEach(function(thisLetter){
             letters[thisLetter].reset();
         })
-
-        // reset hangman
-        hangman.reset();
     },
 
     // control game setup - grab word, set letter states, set hangman state
     "setUp" : function(){
+        // reset hangman
+        hangman.reset();
+
         // pick a word
         var wordIndex = Math.floor(Math.random() * wordList.length);
         this.currentWord = wordList[wordIndex];
@@ -53,12 +53,12 @@ var game = {
 
 var hangman = {
     "remainingLetters" : 0,
-    "remainingGuesses" : 0,
+    "remainingGuesses" : 6,
     // control hangman display
     "reset" : function(){
         this.remainingLetters = 0;
         this.remainingGuesses = 6;
-        this.div.innerHTML("");
+        this.div.innerHTML = "";
     },
     "badGuess" : function(){
         this.remainingGuesses--;
@@ -71,7 +71,8 @@ var hangman = {
         }
     },
     "youLose" : function(){
-
+        game.reset();
+        this.addText("You lose :(");
     },
     "goodGuess" : function(correctLetter){
         for(letterIndex = 0; letterIndex < game.currentWord.length; letterIndex++){
@@ -82,6 +83,7 @@ var hangman = {
             }
         }
         if(this.remainingLetters < 1){
+            hangman.reset();
             this.addText("You win!");
             this.addText("Your word was "+game.getCurrentString())
         }
@@ -155,19 +157,23 @@ class letter {
 
     guess()
     {
-        // This runs when the letter is guessed
-        if(this.isGuessed === true){
-            hangman.addText("You already guessed "+this.letter);
-        }
-        else{
-            this.isGuessed = true;
-            if(this.isAnswer === true){
-                hangman.goodGuess(this.letter);
-                this.div.setAttribute("class", "letter-word letter")
+        // is the game active?
+        if(game.getIsActive() === true)
+        {
+            // This runs when the letter is guessed
+            if(this.isGuessed === true){
+                hangman.addText("You already guessed "+this.letter);
             }
             else{
-                hangman.badGuess();
-                this.div.setAttribute("class", "letter-guessed letter")
+                this.isGuessed = true;
+                if(this.isAnswer === true){
+                    hangman.goodGuess(this.letter);
+                    this.div.setAttribute("class", "letter-word letter")
+                }
+                else{
+                    hangman.badGuess();
+                    this.div.setAttribute("class", "letter-guessed letter")
+                }
             }
         }
     }
@@ -200,5 +206,3 @@ document.onkeyup = function(event){
 
 game.setUp();
 
-hangman.addText("one")
-hangman.addText("two")
