@@ -1,16 +1,38 @@
 
 var game = {
-    // just a utility with some methods
+    // Controls overall gameness
+    "isActive" : false,
     // control reset game - clear letter states, clear hangman state
     "reset" : function() {
+        // deactivate game
+        this.isActive = false;
+        // reset all letters
         alphabet.forEach(function(thisLetter){
             letters[thisLetter].reset();
         })
+
+        // reset hangman
+        hangman.reset();
     },
 
     // control game setup - grab word, set letter states, set hangman state
     "setUp" : function(){
+        // pick a word
+        var wordIndex = Math.floor(Math.random() * wordList.length);
+        this.currentWord = wordList[wordIndex];
 
+        // Tell the hangman how many letters there are
+        hangman.setLetterCount(this.currentWord.length);
+
+        // Tell the letters that they are special now
+        for(letterIndex = 0; letterIndex < this.currentWord.length; letterIndex++){
+            letterLetter = game.currentWord.charAt(letterIndex);
+            letters[letterLetter].setIsAnswer();
+        }
+    },
+    // there is a word for this type of function
+    "getIsActive" : function(){
+        return this.isActive;
     }
 }
 
@@ -27,6 +49,9 @@ var hangman = {
     },
     "youLose" : function(){
 
+    },
+    "setLetterCount" : function(letterCount){
+        this.letterCount = letterCount;
     }
 }
 
@@ -56,7 +81,7 @@ class letter {
         }
     }
 
-    reset() {console.log(this.letter);
+    reset() {
         // set to default state
         this.isGuessed = false;
         this.isAnswer = false;
@@ -65,6 +90,7 @@ class letter {
 
     setIsAnswer() {
         // sets this as a correct answer
+        console.log("I'm special!", this.letter)
     }
 
     getIsAnswer() {
@@ -105,4 +131,4 @@ document.onkeyup = function(event){
     }
 };
 
-game.reset();
+game.setUp();
