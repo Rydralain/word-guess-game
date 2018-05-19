@@ -44,6 +44,7 @@ var hangman = {
     "reset" : function(){
         this.remainingLetters = 0;
         this.remainingGuesses = 6;
+        this.div.innerHTML("");
     },
     "badGuess" : function(){
 
@@ -56,6 +57,10 @@ var hangman = {
     },
     "setLetterCount" : function(letterCount){
         this.letterCount = letterCount;
+    },
+    "div" : document.getElementById("hangman"),
+    "addText" : function(text){
+        this.div.innerHTML += text+"<br>";
     }
 }
 
@@ -145,4 +150,9 @@ document.onkeyup = function(event){
     }
 };
 
+
+
 game.setUp();
+
+hangman.addText("one")
+hangman.addText("two")
