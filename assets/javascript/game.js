@@ -73,11 +73,25 @@ var hangman = {
     "youLose" : function(){
 
     },
-    "goodGuess" : function(){
-
+    "goodGuess" : function(correctLetter){
+        for(letterIndex = 0; letterIndex < game.currentWord.length; letterIndex++){
+            letterLetter = game.currentWord.charAt(letterIndex);
+            if(letterLetter == correctLetter)
+            {
+                hangman.remainingLetters--;
+            }
+        }
+        if(this.remainingLetters < 1){
+            this.addText("You win!");
+            this.addText("Your word was "+game.getCurrentString())
+        }
+        else{
+            this.addText("You guessed correctly!");
+            this.addText(game.getCurrentString());
+        }
     },
     "setLetterCount" : function(letterCount){
-        this.letterCount = letterCount;
+        this.remainingLetters = letterCount;
     },
     "div" : document.getElementById("hangman"),
     "addText" : function(text){
@@ -148,7 +162,7 @@ class letter {
         else{
             this.isGuessed = true;
             if(this.isAnswer === true){
-                hangman.goodGuess();
+                hangman.goodGuess(this.letter);
                 this.div.setAttribute("class", "letter-word letter")
             }
             else{
