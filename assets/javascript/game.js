@@ -29,8 +29,9 @@ var game = {
             letterLetter = game.currentWord.charAt(letterIndex);
             letters[letterLetter].setIsAnswer();
         }
+        this.isActive = true;
     },
-    // there is a word for this type of function
+    // there is a word for this type of functio
     "getIsActive" : function(){
         return this.isActive;
     }
