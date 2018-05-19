@@ -47,6 +47,7 @@ var game = {
                 currentString += "_";
             }
         }
+        return currentString;
     }
 }
 
@@ -60,7 +61,14 @@ var hangman = {
         this.div.innerHTML("");
     },
     "badGuess" : function(){
-
+        this.remainingGuesses--;
+        if(this.remainingGuesses > 1)
+        {
+            
+        }
+        else{
+            this.youLose();
+        }
     },
     "youLose" : function(){
 
@@ -90,7 +98,7 @@ class letter {
         // create display tag
         var newDiv = document.createElement("div");
         newDiv.setAttribute("id", this.letter);
-        newDiv.setAttribute("class", "letter-guessed letter");
+        newDiv.setAttribute("class", "letter-dull letter");
         newDiv.innerHTML = this.letter;
 
         // Decide if we're a left or right letter
@@ -118,25 +126,36 @@ class letter {
         // set to default state
         this.isGuessed = false;
         this.isAnswer = false;
-        document.getElementById(this.letter)
+        this.div.setAttribute("class", "letter-dull letter")
     }
 
     setIsAnswer() {
         // sets this as a correct answer
-        console.log("I'm special!", this.letter)
+        this.isAnswer = true;
     }
 
     getIsAnswer() {
         // Returns selected state
+        return this.isAnswer;
     }
 
     guess()
     {
         // This runs when the letter is guessed
-        // check if it's guessed
-            // if so, check if it's an answer
-                // if so, let hangman know
-                // if not, let hangman know
+        if(this.isGuessed === true){
+            hangman.addText("You already guessed "+this.letter);
+        }
+        else{
+            this.isGuessed = true;
+            if(this.isAnswer === true){
+                hangman.goodGuess();
+                this.div.setAttribute("class", "letter-word letter")
+            }
+            else{
+                hangman.badGuess();
+                this.div.setAttribute("class", "letter-guessed letter")
+            }
+        }
     }
 
 
