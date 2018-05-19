@@ -1,0 +1,52 @@
+body{
+    background-color: #333;
+}
+
+#game{
+    margin:0 auto;
+    width: 590px;
+    height: 400px;
+    background-color: black;
+    color: #eee;
+    border: 3px solid #eee;
+    font-family: 'Press Start 2P', cursive;
+    overflow: hidden;
+}
+
+#hangman{
+    float:left;
+    width: 522px;
+    height: 100%;
+    padding: 5px;
+}
+
+.alphabet{
+    float:left;
+    width:26px;
+    text-align: center;
+    height: 100%;
+}
+
+#alphabet-left{
+    border-right: 3px dashed #eee;
+}
+
+#alphabet-right{
+    border-left: 3px dashed #eee;
+}
+
+.letter{
+    margin: 5px;
+}
+
+.letter-guessed{
+    color: #eee;
+}
+
+.letter-dull{
+    color: #666;
+}
+
+.letter-word{
+    color: #33f;
+}

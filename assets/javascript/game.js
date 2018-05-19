@@ -43,12 +43,15 @@ var hangman = {
     // control hangman display
     "reset" : function(){
         this.remainingLetters = 0;
-        this.remainingGuesses = 0;
+        this.remainingGuesses = 6;
     },
     "badGuess" : function(){
 
     },
     "youLose" : function(){
+
+    },
+    "goodGuess" : function(){
 
     },
     "setLetterCount" : function(letterCount){
@@ -71,6 +74,17 @@ class letter {
         newDiv.setAttribute("id", this.letter);
         newDiv.setAttribute("class", "letter-guessed letter");
         newDiv.innerHTML = this.letter;
+
+        // Decide if we're a left or right letter
+        if(alphabetLeft.indexOf(this.letter) != -1)
+        {
+            var alphabetDiv = document.getElementById("alphabet-left");
+        }
+        else if(alphabetRight.indexOf(this.letter) != -1)
+        {
+            var alphabetDiv = document.getElementById("alphabet-right");
+        }
+
         alphabetDiv.appendChild(newDiv);
 
         // Now that it exists, let's make it easy to select it.
@@ -111,11 +125,10 @@ class letter {
 }
 
 // I have summoned the *entire* alphabet!
-var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",];
+var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+var alphabetLeft = ["a","b","c","d","e","f","g","h","i","j","k","l","m"];
+var alphabetRight = ["n","o","p","q","r","s","t","u","v","w","x","y","z"];
 var letters = [];
-
-// Setting this because we use it a lot in object instantiation
-var alphabetDiv = document.getElementById("alphabet");
 
 // BUILD THE LETTERS
 alphabet.forEach(function(thisLetter){
