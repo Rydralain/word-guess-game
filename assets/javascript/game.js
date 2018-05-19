@@ -29,7 +29,7 @@ var hangman = {
 }
 
 
-// I know that classes are, like, super overkill here, but I've learned a lot about OOP/OOD since I had the time to play with JS,
+// I don't know if classes are super overkill here, but I've learned a lot about OOP/OOD since I had the time to play with JS,
 // so I wanted to explore it. Also, when did JS get classes? I thought you had to do hackey stuff with the prototype object to do this?!
 class letter {
     constructor(letter) {
@@ -41,12 +41,17 @@ class letter {
         // create display tag
         var newDiv = document.createElement("div");
         newDiv.setAttribute("id", this.letter);
-        newDiv.setAttribute("class", "letter-guessed");
+        newDiv.setAttribute("class", "letter-guessed letter");
         newDiv.innerHTML = this.letter;
         alphabetDiv.appendChild(newDiv);
 
         // Now that it exists, let's make it easy to select it.
         this.div = document.getElementById(this.letter);
+
+        // Set an onClick to trigger when this div is clicked - that's a guess
+        this.div.onclick = function(event){
+            letters[this.id].guess();
+        }
     }
 
     reset() {
@@ -65,7 +70,7 @@ class letter {
     }
 
     guess()
-    {
+    {console.log(this.letter);
         // This runs when the letter is guessed
         // check if it's guessed
             // if so, check if it's an answer
@@ -80,12 +85,20 @@ class letter {
 var alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",];
 var letters = [];
 
-
+// Setting this because we use it a lot in object instantiation
 var alphabetDiv = document.getElementById("alphabet");
 
-
+// BUILD THE LETTERS
 alphabet.forEach(function(thisLetter){
     letters[thisLetter] = new letter(thisLetter);
-})
+});
 
-
+// The letters handle their own onClicks, but we need a global onKeyUp to get it from keypress too, since clicking letters sucks
+document.onkeyup = function(event){
+    try {
+        letters[event.key].guess();
+    }
+    catch {
+        // do nothing
+    }
+};
