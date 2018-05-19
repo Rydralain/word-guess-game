@@ -3,7 +3,7 @@ body{
 }
 
 #game{
-    margin:0 auto;
+    margin:50px auto;
     width: 590px;
     height: 400px;
     background-color: black;
@@ -18,6 +18,8 @@ body{
     width: 522px;
     height: 390px;
     padding: 5px;
+    display: flex;
+    align-items: flex-end;
 }
 
 .alphabet{
