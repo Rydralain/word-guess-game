@@ -34,6 +34,19 @@ var game = {
     // there is a word for this type of functio
     "getIsActive" : function(){
         return this.isActive;
+    },
+    "getCurrentString" : function(){
+        var currentString = "";
+        for(letterIndex = 0; letterIndex < this.currentWord.length; letterIndex++){
+            letterLetter = game.currentWord.charAt(letterIndex);
+            if(letters[letterLetter].isGuessed)
+            {
+                currentString += letterLetter;
+            }
+            else{
+                currentString += "_";
+            }
+        }
     }
 }
 
