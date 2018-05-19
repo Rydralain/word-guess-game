@@ -3,11 +3,13 @@ var game = {
     // just a utility with some methods
     // control reset game - clear letter states, clear hangman state
     "reset" : function() {
-
+        alphabet.forEach(function(thisLetter){
+            letters[thisLetter].reset();
+        })
     },
 
     // control game setup - grab word, set letter states, set hangman state
-    "setUp" : function( ){
+    "setUp" : function(){
 
     }
 }
@@ -54,7 +56,7 @@ class letter {
         }
     }
 
-    reset() {
+    reset() {console.log(this.letter);
         // set to default state
         this.isGuessed = false;
         this.isAnswer = false;
@@ -70,7 +72,7 @@ class letter {
     }
 
     guess()
-    {console.log(this.letter);
+    {
         // This runs when the letter is guessed
         // check if it's guessed
             // if so, check if it's an answer
@@ -102,3 +104,5 @@ document.onkeyup = function(event){
         // do nothing
     }
 };
+
+game.reset();
