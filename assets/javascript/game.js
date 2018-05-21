@@ -194,15 +194,13 @@ alphabet.forEach(function(thisLetter){
 
 // The letters handle their own onClicks, but we need a global onKeyUp to get it from keypress too, since clicking letters sucks
 document.onkeyup = function(event){
-    try {
+    if(alphabet.indexOf(event.key) != -1 && game.getIsActive() === true) {
         letters[event.key].guess();
     }
-    catch {
-        // do nothing
+    else if(event.key === "Enter" && game.getIsActive() === false){
+        game.setUp();
     }
 };
 
 
-
-game.setUp();
 
