@@ -60,11 +60,12 @@ var hangman = {
         this.remainingGuesses = 6;
         this.div.innerHTML = "";
     },
-    "badGuess" : function(){
+    "badGuess" : function(guessedLetter){
         this.remainingGuesses--;
+        this.addText("Sorry, but "+guessedLetter+" is not a correct letter.");
         if(this.remainingGuesses > 1)
         {
-            
+            this.addText("You have "+this.remainingGuesses+" tries remaining.");
         }
         else{
             this.youLose();
@@ -171,7 +172,7 @@ class letter {
                     this.div.setAttribute("class", "letter-word letter")
                 }
                 else{
-                    hangman.badGuess();
+                    hangman.badGuess(this.letter);
                     this.div.setAttribute("class", "letter-guessed letter")
                 }
             }
