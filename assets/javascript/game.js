@@ -30,6 +30,7 @@ var game = {
             letters[letterLetter].setIsAnswer();
         }
         this.isActive = true;
+        hangman.addText("Tap, click, or press any letter to guess the word! You have 6 tries.")
     },
     // there is a word for this type of functio
     "getIsActive" : function(){
@@ -63,7 +64,7 @@ var hangman = {
     "badGuess" : function(guessedLetter){
         this.remainingGuesses--;
         this.addText("Sorry, but "+guessedLetter+" is not a correct letter.");
-        if(this.remainingGuesses > 1)
+        if(this.remainingGuesses > 0)
         {
             this.addText("You have "+this.remainingGuesses+" tries remaining.");
         }
@@ -74,6 +75,7 @@ var hangman = {
     "youLose" : function(){
         game.reset();
         this.addText("You lose :(");
+        this.startText();
     },
     "goodGuess" : function(correctLetter){
         for(letterIndex = 0; letterIndex < game.currentWord.length; letterIndex++){
@@ -84,9 +86,11 @@ var hangman = {
             }
         }
         if(this.remainingLetters < 1){
-            hangman.reset();
+            var finishedWord = game.getCurrentString();
+            game.reset();
             this.addText("You win!");
-            this.addText("Your word was "+game.getCurrentString())
+            this.addText("Your word was "+finishedWord);
+            hangman.startText();
         }
         else{
             this.addText("You guessed correctly!");
@@ -98,7 +102,10 @@ var hangman = {
     },
     "div" : document.getElementById("hangman"),
     "addText" : function(text){
-        this.div.innerHTML += text+"<br>";
+        this.div.innerHTML += text+"<br />";
+    },
+    "startText" : function(){
+        this.addText('Tap, click, or press any letter to play!');
     }
 }
 
@@ -177,6 +184,9 @@ class letter {
                 }
             }
         }
+        else {
+            game.setUp();
+        }
     }
 
 
@@ -195,13 +205,10 @@ alphabet.forEach(function(thisLetter){
 
 // The letters handle their own onClicks, but we need a global onKeyUp to get it from keypress too, since clicking letters sucks
 document.onkeyup = function(event){
-    if(alphabet.indexOf(event.key) != -1 && game.getIsActive() === true) {
+    if(alphabet.indexOf(event.key) != -1) {
         letters[event.key].guess();
-    }
-    else if(event.key === "Enter" && game.getIsActive() === false){
-        game.setUp();
     }
 };
 
 
-
+hangman.startText();
