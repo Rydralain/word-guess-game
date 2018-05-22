@@ -31,6 +31,7 @@ var game = {
         }
         this.isActive = true;
         hangman.addText("Tap, click, or press any letter to guess the word! You have 6 tries.")
+        hangman.addText(this.getCurrentString());
     },
     // there is a word for this type of functio
     "getIsActive" : function(){
@@ -71,10 +72,13 @@ var hangman = {
         else{
             this.youLose();
         }
+        this.addText(game.getCurrentString());
     },
     "youLose" : function(){
+        var oldWord = game.currentWord;
         game.reset();
         this.addText("You lose :(");
+        this.addText("Your word was "+ oldWord);
         this.startText();
     },
     "goodGuess" : function(correctLetter){
@@ -175,12 +179,12 @@ class letter {
             else{
                 this.isGuessed = true;
                 if(this.isAnswer === true){
+                    this.div.setAttribute("class", "letter-word letter");
                     hangman.goodGuess(this.letter);
-                    this.div.setAttribute("class", "letter-word letter")
                 }
                 else{
+                    this.div.setAttribute("class", "letter-guessed letter");
                     hangman.badGuess(this.letter);
-                    this.div.setAttribute("class", "letter-guessed letter")
                 }
             }
         }
